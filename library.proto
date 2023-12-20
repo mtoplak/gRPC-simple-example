@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+message BookRequest {
+  string title = 1;
+  int32 authorId = 2;
+  string genre = 3;
+  int32 publicationYear = 4;
+}
+
+message UpdateBookRequest {
+  int32 id = 1;
+  string title = 2;
+  int32 authorId = 3;
+  string genre = 4;
+  int32 publicationYear = 5;
+}
+
+message BookResponse {
+  int32 id = 1;
+  string title = 2;
+  int32 authorId = 3;
+  string genre = 4;
+  int32 publicationYear = 5;
+}
+
+message DeleteBookSuccess {
+  bool success = 1;
+}
+
+message DeleteBookRequest {
+  int32 id = 1;
+}
+
+message BooksResponse {
+  repeated BookResponse books = 1;
+}
+
+message GetBookRequest {
+  int32 id = 1;
+}
+
+message AuthorRequest {
+  string name = 1;
+  string surname = 2;
+  int32 birthYear = 3;
+  string country = 4;
+  string genre = 5;
+}
+
+message UpdateAuthorRequest {
+  int32 id = 1;
+  string name = 2;
+  string surname = 3;
+  int32 birthYear = 4;
+  string country = 5;
+  string genre = 6;
+}
+
+message AuthorResponse {
+  int32 id = 1;
+  string name = 2;
+  string surname = 3;
+  int32 birthYear = 4;
+  string country = 5;
+  string genre = 6;
+}
+
+message GetAuthorRequest {
+  int32 id = 1;
+}
+
+message AuthorsResponse {
+  repeated AuthorResponse authors = 1;
+}
+
+message DeleteAuthorSuccess {
+  bool success = 1;
+}
+
+message DeleteAuthorRequest {
+  int32 id = 1;
+}
+
+service LibraryService {
+  rpc AddBookStream(stream BookRequest) returns (BooksResponse); // client-side streaming
+  rpc AddBook(BookRequest) returns (BookResponse);
+  rpc GetBook(GetBookRequest) returns (BookResponse);
+  rpc UpdateBook(UpdateBookRequest) returns (BookResponse);
+  rpc DeleteBook(DeleteBookRequest) returns (DeleteBookSuccess);
+
+  rpc AddAuthor(AuthorRequest) returns (AuthorsResponse);
+  rpc GetAuthor(GetAuthorRequest) returns (AuthorResponse);
+  rpc UpdateAuthor(UpdateAuthorRequest) returns (AuthorResponse);
+  rpc DeleteAuthor(DeleteAuthorRequest) returns (DeleteAuthorSuccess);
+}
